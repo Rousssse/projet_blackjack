@@ -422,6 +422,7 @@ function CroupierPair(){
 // loi hypergeo pour pair croupier
 
 // const data = [];
+// const label 
 
 // // Calculer la densité de probabilité pour chaque point
 // for (let x = -5; x <= 5; x += 0.1) {
@@ -429,26 +430,22 @@ function CroupierPair(){
 //   data.push({x : x, y: valeur});
 // }
 
-// const xScale = d3
-//   .scaleLinear()
-//   .domain([-5, 5])
-//   .range([0, 500]);
-// const yScale = d3
-//   .scaleLinear()
-//   .domain([0, d3.max(data, d => d.y)])
-//   .range([300, 0]);
-// const line = d3
-//   .line()
-//   .x(d => xScale(d.x))
-//   .y(d => yScale(d.y));
-// const svg = d3.select('canvas');
-// svg
-//   .append('path')
-//   .datum(data)
-//   .attr('fill', 'none')
-//   .attr('stroke', 'steelblue')
-//   .attr('stroke-width', 2)
-//   .attr('d', line);
+// const canvas = document.createElement('canvas');
+// document.body.appendChild(canvas);
+
+
+// new Chart(canvas.getContext('2d'), {
+//   type: 'line',
+//   data: {
+//     labels: labels,
+//     datasets: [
+//       {
+//         label: 'Densité de probabilité',
+//         data: data,
+//       },
+//     ],
+//   },
+// }); 
 
 
 
