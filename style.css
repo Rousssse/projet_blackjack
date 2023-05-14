@@ -1,0 +1,15 @@
+button {
+    background-color: #4CAF50; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 5px 10px; /* Espacement du texte à l'intérieur */
+    border: none; /* Enlever la bordure */
+    cursor: pointer; /* Ajouter un pointeur de souris au survol */
+    border-radius: 5px; /* Ajouter un bord arrondi */
+  }
+  
+  /* Style pour le bouton "SPLIT" */
+  #split {
+    background-color: #f44336; /* Changer la couleur de fond */
+  }
+
+  
