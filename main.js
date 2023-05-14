@@ -207,14 +207,14 @@ Keep.addEventListener('click', () => {
       updateScores();
   
       // Reveal the dealer's facedown card
-      dealerCardsElement.innerHTML += ' ' + dealerCards[1].card;
+      dealerCardsElement.innerHTML += ' ' + dealerCards[1].name;
       dealerScore = getHandValue(dealerCards);
   
       // Dealer draws cards until their score is 17 or higher
       while (dealerScore < 17) {
         const card = drawCard();
         dealerCards.push(card);
-        dealerCardsElement.innerHTML += ' ' + card.card;
+        dealerCardsElement.innerHTML += ' ' + card.name;
         dealerScore = getHandValue(dealerCards);
       }
   
@@ -241,14 +241,14 @@ Keep.addEventListener('click', () => {
     updateScores();
 
     // Reveal the dealer's facedown card
-    dealerCardsElement.innerHTML += ' ' + dealerCards[1].card;
+    dealerCardsElement.innerHTML += ' ' + dealerCards[1].name;
     dealerScore = getHandValue(dealerCards);
 
     // Dealer draws cards until their score is 17 or higher
     while (dealerScore < 17) {
       const card = drawCard();
       dealerCards.push(card);
-      dealerCardsElement.innerHTML += ' ' + card.card;
+      dealerCardsElement.innerHTML += ' ' + card.name;
       dealerScore = getHandValue(dealerCards);
     }
     if(playerScore < 21){
