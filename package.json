@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@kurkle/color": "^0.3.2",
-    "chart.js": "^4.3.0",
-    "d3.js": "^0.0.2-security"
-  }
-}

@@ -3,6 +3,7 @@ import {loiUniforme} from './loi.js';
 import { loiNormal } from './loi.js';
 import { bernouilli } from './loi.js';
 import { loiHyperGeometrique } from './loi.js';
+
 const Pull = document.querySelector('#pull');
 const Keep = document.querySelector('#keep');
 const Split = document.querySelector('#split');
@@ -81,9 +82,6 @@ draw.addEventListener('click', () => {
   console.log(deck);
   shuffleDeck(deck);
    
-  
-  
-
   dealerCardsElement.innerHTML = '';
   playerCardsElement.innerHTML = '';
   secondCardsElement.innerHTML = '';
@@ -99,11 +97,18 @@ draw.addEventListener('click', () => {
   CroupierPair();
   dealerCards.push(drawCard());
   console.log(playerCards, "main joueur");
-
-  
   console.log(dealerCards , "main dealer");
 
+  const data = [];
 
+  for (let x = 3; x <= 21; x += 1) {
+    const valeur = loiNormal(x,resultData);
+    data.push({x : x, y: valeur});
+    console.log("LA LOI BINOOOOO "+valeur);
+    barChart.data.datasets[0].data[x] = valeur;
+  }
+
+  barChart.update();
 
   // Update the HTML to display the cards
   dealerCardsElement.innerHTML = 'Cartes du croupier : ' + dealerCards[0].name + ' ' + '?';
@@ -421,18 +426,38 @@ function CroupierPair(){
 // loi bernouilli pour savoir blackjack croupier
 // loi hypergeo pour pair croupier
 
-// const data = [];
+const data = [];
 // const label 
 
 // // Calculer la densité de probabilité pour chaque point
-// for (let x = -5; x <= 5; x += 0.1) {
-//   const valeur = loiNormal(x,resultData);
-//   data.push({x : x, y: valeur});
-// }
 
 // const canvas = document.createElement('canvas');
 // document.body.appendChild(canvas);
+const barCanvas = document.getElementById("barCanvas")
+const labels = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+const dataChart = {
+  labels: labels,
+  datasets: [{
+    label: 'Densité de probabilité',
+    data: [],
+    backgroundColor: [
+      'crimson'
+    ]
+  }]
+};
+const barChart = new Chart(barCanvas, {
+  type: 'bar',
+  data: dataChart,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  },
+});
 
+//[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
 
 // new Chart(canvas.getContext('2d'), {
 //   type: 'line',
