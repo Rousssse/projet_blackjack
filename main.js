@@ -26,6 +26,8 @@ const playerCards = [];
 const playerHands = [];
 const drawnCards = [];
 const resultData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+const resultDataDealer = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
 let deck = [];
 let index = 0;
 const suits = ['♠ pique', '♥ coeur', '♦ carreau', '♣ trèfle'];
@@ -94,21 +96,31 @@ draw.addEventListener('click', () => {
   dealerCards.push(drawCard());
   playerCards.push(drawCard());
   resultData[parseInt(playerCards[0].value) + parseInt(playerCards[1].value)-3] +=1;
+
   console.log("resultData" , resultData);
   croupierBlackJack();
   CroupierPair();
   dealerCards.push(drawCard());
+
+  resultDataDealer[parseInt(dealerCards[0].value) + parseInt(dealerCards[1].value)-3] +=1;
+
   console.log(playerCards, "main joueur");
   console.log(dealerCards , "main dealer");
 
   const data = [];
+  const dataDealer = [];
 
   for (let x = 3; x <= 21; x += 1) {
     const valeur = loiNormal(x,resultData);
+    const valeurDealer = loiNormal(x,resultDataDealer);
     data.push({x : x, y: valeur});
+    dataDealer.push({x : x, y: valeur});
     console.log("La Loi normal "+ valeur);
     barChart.data.datasets[0].data[x-3] = valeur;
+    barChart.data.datasets[1].data[x-3] = valeurDealer;
+
   }
+
 
   barChart.update();
 
@@ -439,13 +451,22 @@ const barCanvas = document.getElementById("barCanvas")
 const labels = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
 const dataChart = {
   labels: labels,
-  datasets: [{
-    label: 'Densité de probabilité',
+  datasets: [
+  {
+    label: 'Densité de probabilité joueur',
     data: [],
     backgroundColor: [
       'crimson'
-    ]
-  }]
+    ],
+  },
+  {
+    label: 'Densité de probabilité dealer',
+    data: [],
+    backgroundColor: [
+      'blue'
+    ],
+  }
+]
 };
 const barChart = new Chart(barCanvas, {
   type: 'bar',

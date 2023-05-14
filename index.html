@@ -1,53 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-<h2>Croupier :</h2>
-<button id="draw"> Jouer</button>
-<div id="dealer-cards"></div>
-<p> Score Croupier 1:</p>
-<div id="dealer-score"></div>
-<br>
-<h2> Joueur : </h2>
-<div id="player-cards"></div>
-<div id="second-cards"></div>
-<div>
-<p> Score  Main 1:</p>
-<div id="player-score"></div>
-<p>  Score Main 2 :</p>
-<div id="second-score"></div>
-</div>
+
+    <div class="game-info">
+        <div class="players">
+        <div class="joueur">
+            <h2>Joueur : </h2>
+            <div class="info">
+                <b><div id="player-cards"></div>
+                <div id="second-cards"></div></b>
+                <div>
+                    <p>Score Main 1: <b id="player-score"></b></p>
+                    <p>Score Main 2 : <b id="second-score"></b></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="croupier">
+            <h2>Croupier :</h2>
+            <div class="info">
+
+            <div id="dealer-cards"></div>
+            <p>Score Croupier 1: <b id="dealer-score"></b></p>
+            </div>
+        </div>
+        </div>
+        <div class="action">
+            <button id="split">SPLIT</button>
+            <button id="pull">PULL</button>
+            <button id="keep">KEEP</button>
+        </div>
+
+        <button id="draw">Jouer</button>
+
+    </div>
 
 
+    <!-- <button id="double">DOUBLE</button> -->
+    <div class="stats-section">
+        <div class="stats">
+            <p>Probabilité de blackjack croupier ( carte 1) : </p>
+            <div id="blackjack"></div>
+            <p>Chance de paires du croupier : </p>
+            <div id="paires"></div>
+        </div>
+        <div class="chart-container" style="position:relative; width:600px; height:400px">
+            <canvas id="barCanvas" aria-label="chart"></canvas>
+        </div>
+    </div>
 
-<button id="split">SPLIT</button>
-<button id="pull">PULL</button>
-<button id="keep">KEEP</button>
-<!-- <button id="double">DOUBLE</button> -->
-
-<p> Probabilité de blackjack croupier ( carte 1) : </p>
-<div id="blackjack"></div>
-<p> chance de paires du croupier : </p>
-<div id="paires"></div>
-<canvas id="barCanvas" aria-lavel="chart" role="img"></canvas>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-<script type="module" src="main.js"></script>
-
-<script>
-
-</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 
 
 </html>
-
-
-
-

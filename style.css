@@ -1,15 +1,97 @@
-button {
-    background-color: #4CAF50; /* Couleur de fond */
-    color: white; /* Couleur du texte */
-    padding: 5px 10px; /* Espacement du texte à l'intérieur */
-    border: none; /* Enlever la bordure */
-    cursor: pointer; /* Ajouter un pointeur de souris au survol */
-    border-radius: 5px; /* Ajouter un bord arrondi */
-  }
-  
-  /* Style pour le bouton "SPLIT" */
-  #split {
-    background-color: #f44336; /* Changer la couleur de fond */
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  background-color: #e0e0e0;
+}
 
-  
+button {
+  background-color: #4caf50; /* Couleur de fond */
+  color: white; /* Couleur du texte */
+  padding: 5px 10px; /* Espacement du texte à l'intérieur */
+  border: none; /* Enlever la bordure */
+  cursor: pointer; /* Ajouter un pointeur de souris au survol */
+  border-radius: 5px; /* Ajouter un bord arrondi */
+  margin: 10px;
+}
+
+/* Style pour le bouton "SPLIT" */
+#split {
+  background-color: #f44336; /* Changer la couleur de fond */
+}
+h2 {
+  margin: 0;
+}
+p {
+  margin: 0;
+}
+.game-info {
+  background-color: gray;
+  border-radius: 15px;
+  padding: 1rem;
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 350px;
+  position: relative;
+  border-radius: 50px;
+  background: #e0e0e0;
+  box-shadow: 41px 41px 82px #8f8f8f, -41px -41px 82px #ffffff;
+}
+.players {
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
+  font-size: 2rem;
+}
+
+.joueur,
+.croupier {
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info {
+  border: 5px solid rgb(1, 1, 50);
+  padding: 2rem;
+  border-radius: 15px;
+}
+.action {
+  display: flex;
+}
+#draw {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  padding: 10px;
+  font-size: 1.5rem;
+  background-color: rgb(1, 1, 50);
+}
+
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.stats,
+.chart-container {
+  border-radius: 20px;
+  background: #e0e0e0;
+  box-shadow: 25px 25px 50px #8f8f8f, -25px -25px 50px #ffffff;
+  padding: 1rem;
+}
+.stats p {
+  margin: 10px 0;
+  font-size: 1.5rem;
+}
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
