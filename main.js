@@ -94,6 +94,7 @@ draw.addEventListener('click', () => {
   dealerCards.push(drawCard());
   playerCards.push(drawCard());
   resultData[parseInt(playerCards[0].value) + parseInt(playerCards[1].value)-3] +=1;
+  console.log("resultData" , resultData);
   croupierBlackJack();
   CroupierPair();
   dealerCards.push(drawCard());
@@ -105,8 +106,8 @@ draw.addEventListener('click', () => {
   for (let x = 3; x <= 21; x += 1) {
     const valeur = loiNormal(x,resultData);
     data.push({x : x, y: valeur});
-    console.log("LA LOI BINOOOOO "+valeur);
-    barChart.data.datasets[0].data[x] = valeur;
+    console.log("La Loi normal "+ valeur);
+    barChart.data.datasets[0].data[x-3] = valeur;
   }
 
   barChart.update();
@@ -323,8 +324,8 @@ Split.addEventListener('click', () => {
   
 
    // Update the HTML to display the new hands
-   playerCardsElement.innerHTML = 'Vos cartes : ' + playerCards[0].card + ' ' + playerCards[1].card;
-   secondCardsElement.innerHTML = 'Vos cartes : ' + playerHands[0].card + ' ' + playerHands[1].card;
+   playerCardsElement.innerHTML = 'Vos cartes : ' + playerCards[0].name + ' ' + playerCards[1].name;
+   secondCardsElement.innerHTML = 'Vos cartes : ' + playerHands[0].name + ' ' + playerHands[1].name;
 
     updateScores();
 

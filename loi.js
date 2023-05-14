@@ -104,7 +104,6 @@ function ecartTypeNormal( resultData, mean){
 export function loiNormal(x,resultData){
     const mean = meanNormal(resultData);
     const ecarttype = ecartTypeNormal(resultData,mean);
-    const pas = 0.1;
     const coeff = 1/(ecarttype * Math.sqrt(2* Math.PI));
     const exponentiel = -((x-mean) ** 2) / (2 * ecarttype ** 2);
     return coeff * Math.exp(exponentiel);
