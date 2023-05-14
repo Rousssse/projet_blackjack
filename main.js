@@ -70,6 +70,7 @@ draw.addEventListener('click', () => {
   dealerCards.length = 0;
   playerCards.length = 0;
   playerHands.length = 0;
+  index = 0;
   handCount = 0;
   deck.splice(0,52);
   for (let i = 0; i < suits.length; i++) {
