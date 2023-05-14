@@ -165,7 +165,7 @@ Pull.addEventListener('click', () => {
     playerScore = getHandValue(playerCards);
     console.log(playerScore , "gethandvalueplayercards");
     console.log(playerCardsElement);
-    playerCardsElement.innerHTML += ' ' + card.card;
+    playerCardsElement.innerHTML += ' ' + card.name;
   }
   else if( secondScore !=0 && handCount === 1){
     const secondcard = drawCard();
