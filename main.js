@@ -285,11 +285,11 @@ Keep.addEventListener('click', () => {
         playerScoreElement.textContent = 'Vous avez gagné ' + playerScore;
       } 
       else if (dealerScore === playerScore ){
-        playerScoreElement.textContent = 'match nul !' + playerScore;
+        playerScoreElement.textContent = 'match nul ! ' + playerScore;
       }
         else if(dealerScore ===21){
           playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
-          dealerScoreElement.textContent = "BLACKJACK"  + dealerScore;
+          dealerScoreElement.textContent = "BLACKJACK "  + dealerScore;
         }
         else if (dealerScore > playerScore) {
           playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
