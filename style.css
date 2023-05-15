@@ -98,4 +98,9 @@ p {
 #player-cards-images img, #croupier-cards-images img{
   width:100px;
   height:auto;
+  transition:0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  margin:5px;
+}
+#player-cards-images img:hover, #croupier-cards-images img:hover{
+  transform: scale(1.2);
 }
