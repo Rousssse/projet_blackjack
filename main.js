@@ -100,6 +100,7 @@ draw.addEventListener('click', () => {
   playerCards.push(drawCard());
   dealerCards.push(drawCard());
   playerCards.push(drawCard());
+  
   resultData[parseInt(playerCards[0].value) + parseInt(playerCards[1].value)-3] +=1;
 
   playerCardsImagesHand2.innerHTML = '';
@@ -155,6 +156,7 @@ draw.addEventListener('click', () => {
   console.log("score croupier : ", parseInt(dealerCards[0].value));
   console.log("score joueur : ",parseInt(playerCards[0].value) + parseInt(playerCards[1].value));
   playerScore = getHandValue(playerCards);
+  updateScores();
 });
 
 function getHandValue(cards) {
