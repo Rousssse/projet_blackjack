@@ -8,6 +8,8 @@ const Pull = document.querySelector('#pull');
 const Keep = document.querySelector('#keep');
 const Split = document.querySelector('#split');
 let playerCardsImages = document.getElementById("player-cards-images");
+let playerCardsImagesHand2 = document.getElementById("player-cards-images-hand2");
+
 let croupierCardsImages = document.getElementById("croupier-cards-images");
 
 const dealerCardsElement = document.querySelector('#dealer-cards');
@@ -100,6 +102,8 @@ draw.addEventListener('click', () => {
   playerCards.push(drawCard());
   resultData[parseInt(playerCards[0].value) + parseInt(playerCards[1].value)-3] +=1;
 
+  playerCardsImagesHand2.innerHTML = '';
+  
   playerCardsImages.innerHTML = '';
   var img1 = document.createElement("img");
   img1.src = "images/cards/fronts/"+playerCards[0].suit+"_"+playerCards[0].name+".svg";
@@ -220,9 +224,11 @@ Pull.addEventListener('click', () => {
     secondScore = getHandValue(playerHands);
     console.log(secondScore, "gethandvalueplayerhands");
     console.log(secondCardsElement);
-    secondCardsElement.innerHTML += ' ' + secondcard.card;
+    secondCardsElement.innerHTML += ' ' + secondcard.name;
 
-
+    var imgHand = document.createElement("img");
+    imgHand.src = "images/cards/fronts/"+secondcard.suit+"_"+secondcard.name+".svg";
+    playerCardsImagesHand2.appendChild(imgHand);
 
     }
     else if( handCount === 2){
@@ -314,7 +320,6 @@ Keep.addEventListener('click', () => {
     var imgHidden = document.createElement("img");
     imgHidden.src = "images/cards/fronts/"+dealerCards[1].suit+"_"+dealerCards[1].name+".svg";
     croupierCardsImages.appendChild(imgDealer);
-  
     croupierCardsImages.appendChild(imgHidden);
 
     // Dealer draws cards until their score is 17 or higher
@@ -391,7 +396,24 @@ Split.addEventListener('click', () => {
    secondScore = getHandValue(playerHands);
    console.log(secondScore);
    
-  
+   playerCardsImages.innerHTML = '';
+   playerCardsImagesHand2.innerHTML = '';
+
+   var img1Hand1 = document.createElement("img");
+   img1Hand1.src = "images/cards/fronts/"+playerCards[0].suit+"_"+playerCards[0].name+".svg";
+   var img2Hand1 = document.createElement("img");
+   img2Hand1.src = "images/cards/fronts/"+playerCards[1].suit+"_"+playerCards[1].name+".svg";
+
+   playerCardsImages.appendChild(img1Hand1);
+   playerCardsImages.appendChild(img2Hand1);
+
+   var img1Hand2 = document.createElement("img");
+   img1Hand2.src = "images/cards/fronts/"+playerHands[0].suit+"_"+playerHands[0].name+".svg";
+   var img2Hand2 = document.createElement("img");
+   img2Hand2.src = "images/cards/fronts/"+playerHands[1].suit+"_"+playerHands[1].name+".svg";
+   
+   playerCardsImagesHand2.appendChild(img1Hand2);
+   playerCardsImagesHand2.appendChild(img2Hand2);
 
    // Update the HTML to display the new hands
    playerCardsElement.innerHTML = 'Vos cartes : ' + playerCards[0].name + ' ' + playerCards[1].name;
