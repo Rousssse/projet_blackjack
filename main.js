@@ -204,11 +204,11 @@ Pull.addEventListener('click', () => {
 
     // Check if the player busts
     if (playerScore > 21) {
-      playerScoreElement.innerHTML = 'Vous avez perdu blabla' + ' : score = ' + playerScore;
+      playerScoreElement.innerHTML = 'Vous avez perdu ' + playerScore;
       handCount = 1;
     }
     if (secondScore > 21) {
-      secondScoreElement.innerHTML = 'Vous avez perdu blabla2' + ' : score =  ' + secondScore;
+      secondScoreElement.innerHTML = 'Vous avez perdu ' + secondScore;
       handCount = 2;
     }
     if(playerScore > 21 & secondScore > 21 || playerScore > 21 & secondScore === 0){
@@ -239,17 +239,17 @@ Keep.addEventListener('click', () => {
   
       // Determine the winner
       if (dealerScore > 21 || playerScore > dealerScore) {
-        playerScoreElement.textContent = 'Vous avez gagné' + playerScore;
+        playerScoreElement.textContent = 'Vous avez gagné ' + playerScore;
       } 
       else if (dealerScore === playerScore ){
         playerScoreElement.textContent = 'match nul !' + playerScore;
       }
         else if(dealerScore ===21){
-          playerScoreElement.textContent = 'Vous avez perdu'+ ': score = ' + playerScore;
-          dealerScoreElement.textContent = "BLACKJACK" + ': score = '  + dealerScore;
+          playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
+          dealerScoreElement.textContent = "BLACKJACK"  + dealerScore;
         }
         else if (dealerScore > playerScore) {
-          playerScoreElement.textContent = 'Vous avez perdu'+ ': score = ' + playerScore;
+          playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
         }
       
       dealerScoreElement.textContent = dealerScore; 
@@ -275,30 +275,30 @@ Keep.addEventListener('click', () => {
       playerScoreElement.textContent = 'Vous avez gagné ' + playerScore;
     } 
     else if (dealerScore === playerScore ){
-      playerScoreElement.textContent = 'match nul !' + playerScore;
+      playerScoreElement.textContent = 'match nul ! ' + playerScore;
     }
     else if(dealerScore ===21){
-        playerScoreElement.textContent = 'Vous avez perdu'+ ': score = ' + playerScore;
-        dealerScoreElement.textContent = "BLACKJACK" + ': score = '  + dealerScore;
+        playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
+        dealerScoreElement.textContent = "BLACKJACK"  + dealerScore;
       }
     else if (dealerScore > playerScore) {
-        playerScoreElement.textContent = 'Vous avez perdu'+ ': score = ' + playerScore;
+        playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
     }
 
   }
   if(secondScore < 21){
     if (dealerScore > 21 || secondScore > dealerScore) {
-      secondScoreElement.textContent = 'Vous avez gagné2 ' + secondScore;
+      secondScoreElement.textContent = 'Vous avez gagné ' + secondScore;
     } 
     else if (dealerScore === secondScore ){
       secondScoreElement.textContent = 'match nul !' + secondScore;
     }
     else if(dealerScore === 21){
-        secondScoreElement.textContent = 'Vous avez perdu2'+ ': score = ' + secondScore;
-        dealerScoreElement.textContent = "BLACKJACK" + ': score = '  + dealerScore;
+        secondScoreElement.textContent = 'Vous avez perdu '+ secondScore;
+        dealerScoreElement.textContent = "BLACKJACK" + dealerScore;
       }
     else if (dealerScore > secondScore) {
-        secondScoreElement.textContent = 'Vous avez perdu2'+ ': score = ' + secondScore;
+        secondScoreElement.textContent = 'Vous avez perdu ' + secondScore;
       }
   }
 
@@ -356,22 +356,22 @@ function croupierBlackJack(){
     if( dealerCards[0].value === 11){
       if(playerCards[1].value === 10){
         
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(15/49,1);
+        blackJackElement.innerHTML =  bernouilli(15/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(16/49,1);
+        blackJackElement.innerHTML =  bernouilli(16/49,1) + '%';
       }
     }
     else if (dealerCards[0].value === 10){
       if(playerCards[1].value === 11){
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(2/49,1);
+        blackJackElement.innerHTML = bernouilli(2/49,1)+ '%';
       }
       else{
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(3/49,1);
+        blackJackElement.innerHTML =  bernouilli(3/49,1)+ '%';
       }
     }
     else {
-      blackJackElement.innerHTML = 'BlackJack pourcentage ' + 0 ;
+      blackJackElement.innerHTML =   0 + '%';
     }
     
   }
@@ -379,44 +379,44 @@ function croupierBlackJack(){
     if(dealerCards[0].value === 11){
       if(playerCards[1].value === 10){
         
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(14/49,1);
+        blackJackElement.innerHTML =  bernouilli(14/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(15/49,1);
+        blackJackElement.innerHTML =  bernouilli(15/49,1) + '%';
       }
     }
     else if (dealerCards[0].value === 10){
       if(playerCards[1].value === 11){
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(3/49,1);
+        blackJackElement.innerHTML =  bernouilli(3/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(4/49,1);
+        blackJackElement.innerHTML =  bernouilli(4/49,1) + '%';
       }
     }
     else {
-      blackJackElement.innerHTML = 'BlackJack pourcentage ' + 0 ;
+      blackJackElement.innerHTML =  0  + '%';
     }
   }
   else {
     if(dealerCards[0].value === 11){
       if(playerCards[1].value === 10){
         
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(15/49,1);
+        blackJackElement.innerHTML =  bernouilli(15/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(16/49,1);
+        blackJackElement.innerHTML =  bernouilli(16/49,1) + '%';
       }
     }
     else if (dealerCards[0].value === 10){
       if(playerCards[1].value === 11){
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(3/49,1);
+        blackJackElement.innerHTML =  bernouilli(3/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML = 'BlackJack pourcentage ' + bernouilli(4/49,1);
+        blackJackElement.innerHTML = bernouilli(4/49,1) + '%';
       }
     }
     else {
-      blackJackElement.innerHTML = 'BlackJack pourcentage ' + 0 ;
+      blackJackElement.innerHTML = 0 + '%';
     }
   }
 }
