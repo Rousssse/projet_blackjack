@@ -7,6 +7,9 @@ import { loiHyperGeometrique } from './loi.js';
 const Pull = document.querySelector('#pull');
 const Keep = document.querySelector('#keep');
 const Split = document.querySelector('#split');
+let playerCardsImages = document.getElementById("player-cards-images");
+let croupierCardsImages = document.getElementById("croupier-cards-images");
+
 const dealerCardsElement = document.querySelector('#dealer-cards');
 const playerCardsElement = document.querySelector('#player-cards');
 const dealerScoreElement = document.querySelector('#dealer-score');
@@ -30,9 +33,9 @@ const resultDataDealer = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 let deck = [];
 let index = 0;
-const suits = ['♠ pique', '♥ coeur', '♦ carreau', '♣ trèfle'];
+const suits = ['spades', 'hearts', 'diamonds', 'clubs'];
 const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11];
-const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
 function shuffleDeck(deck) {
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor((loiUniforme(100)/100) * (i + 1));
@@ -96,6 +99,24 @@ draw.addEventListener('click', () => {
   dealerCards.push(drawCard());
   playerCards.push(drawCard());
   resultData[parseInt(playerCards[0].value) + parseInt(playerCards[1].value)-3] +=1;
+
+  playerCardsImages.innerHTML = '';
+  var img1 = document.createElement("img");
+  img1.src = "images/cards/fronts/"+playerCards[0].suit+"_"+playerCards[0].name+".svg";
+  var img2 = document.createElement("img");
+  img2.src = "images/cards/fronts/"+playerCards[1].suit+"_"+playerCards[1].name+".svg";
+
+  playerCardsImages.appendChild(img1);
+  playerCardsImages.appendChild(img2);
+
+  croupierCardsImages.innerHTML = '';
+  var imgDealer = document.createElement("img");
+  imgDealer.src = "images/cards/fronts/"+dealerCards[0].suit+"_"+dealerCards[0].name+".svg";
+  var imgHidden = document.createElement("img");
+  imgHidden.src = "images/cards/fronts/red.svg";
+  croupierCardsImages.appendChild(imgDealer);
+
+  croupierCardsImages.appendChild(imgHidden);
 
   console.log("resultData" , resultData);
   croupierBlackJack();
@@ -185,6 +206,10 @@ Pull.addEventListener('click', () => {
     console.log(playerScore , "gethandvalueplayercards");
     console.log(playerCardsElement);
     playerCardsElement.innerHTML += ' ' + card.name;
+    
+    var img1 = document.createElement("img");
+    img1.src = "images/cards/fronts/"+playerCards[playerCards.length-1].suit+"_"+playerCards[playerCards.length-1].name+".svg";
+    playerCardsImages.appendChild(img1);
   }
   else if( secondScore !=0 && handCount === 1){
     const secondcard = drawCard();
@@ -196,6 +221,9 @@ Pull.addEventListener('click', () => {
     console.log(secondScore, "gethandvalueplayerhands");
     console.log(secondCardsElement);
     secondCardsElement.innerHTML += ' ' + secondcard.card;
+
+
+
     }
     else if( handCount === 2){
       console.log(" non non non ");
@@ -226,15 +254,30 @@ Keep.addEventListener('click', () => {
       updateScores();
   
       // Reveal the dealer's facedown card
+      dealerCardsElement.innerHTML = "Score Croupier 1 :";
+      dealerCardsElement.innerHTML += ' ' + dealerCards[0].name;
       dealerCardsElement.innerHTML += ' ' + dealerCards[1].name;
       dealerScore = getHandValue(dealerCards);
   
+      croupierCardsImages.innerHTML = '';
+      var imgDealer = document.createElement("img");
+      imgDealer.src = "images/cards/fronts/"+dealerCards[0].suit+"_"+dealerCards[0].name+".svg";
+      var imgHidden = document.createElement("img");
+      imgHidden.src = "images/cards/fronts/"+dealerCards[1].suit+"_"+dealerCards[1].name+".svg";
+      croupierCardsImages.appendChild(imgDealer);
+    
+      croupierCardsImages.appendChild(imgHidden);
+
       // Dealer draws cards until their score is 17 or higher
       while (dealerScore < 17) {
         const card = drawCard();
         dealerCards.push(card);
         dealerCardsElement.innerHTML += ' ' + card.name;
         dealerScore = getHandValue(dealerCards);
+  
+        var newImgDealer = document.createElement("img");
+        newImgDealer.src = "images/cards/fronts/"+card.suit+"_"+card.name+".svg";
+        croupierCardsImages.appendChild(newImgDealer);
       }
   
       // Determine the winner
@@ -260,8 +303,19 @@ Keep.addEventListener('click', () => {
     updateScores();
 
     // Reveal the dealer's facedown card
+    dealerCardsElement.innerHTML = "Score Croupier 1 :";
+    dealerCardsElement.innerHTML += ' ' + dealerCards[0].name;
     dealerCardsElement.innerHTML += ' ' + dealerCards[1].name;
     dealerScore = getHandValue(dealerCards);
+
+    croupierCardsImages.innerHTML = '';
+    var imgDealer = document.createElement("img");
+    imgDealer.src = "images/cards/fronts/"+dealerCards[0].suit+"_"+dealerCards[0].name+".svg";
+    var imgHidden = document.createElement("img");
+    imgHidden.src = "images/cards/fronts/"+dealerCards[1].suit+"_"+dealerCards[1].name+".svg";
+    croupierCardsImages.appendChild(imgDealer);
+  
+    croupierCardsImages.appendChild(imgHidden);
 
     // Dealer draws cards until their score is 17 or higher
     while (dealerScore < 17) {
@@ -269,6 +323,10 @@ Keep.addEventListener('click', () => {
       dealerCards.push(card);
       dealerCardsElement.innerHTML += ' ' + card.name;
       dealerScore = getHandValue(dealerCards);
+
+      var newImgDealer = document.createElement("img");
+      newImgDealer.src = "images/cards/fronts/"+card.suit+"_"+card.name+".svg";
+      croupierCardsImages.appendChild(newImgDealer);
     }
     if(playerScore < 21){
     if (dealerScore > 21 || playerScore > dealerScore) {
