@@ -1,9 +1,9 @@
-// import d3 from './node_modules/d3.js'
-import {loiUniforme} from './loi.js';
-import { loiNormal } from './loi.js';
-import { bernouilli } from './loi.js';
+import {loiExponentielle, loiNormale, loiUniforme} from './loi.js';
+import { loiBernouilli } from './loi.js';
 import { loiHyperGeometrique } from './loi.js';
-
+import { loiPoisson} from './loi.js'
+import { loiBeta } from './loi.js';
+import { loiLogistique } from './loi.js';
 const Pull = document.querySelector('#pull');
 const Keep = document.querySelector('#keep');
 const Split = document.querySelector('#split');
@@ -102,6 +102,13 @@ draw.addEventListener('click', () => {
   playerCards.push(drawCard());
   
   resultData[parseInt(playerCards[0].value) + parseInt(playerCards[1].value)-3] +=1;
+  // loiPoisson(3);
+  console.log("poisson", loiPoisson(3));
+  console.log("beta", loiBeta(0.5,0.5));
+  console.log("logistique", loiLogistique(50,25));
+  changeopacity();
+  changeBackgroundColor();
+  // changesize();
 
   playerCardsImagesHand2.innerHTML = '';
   
@@ -133,22 +140,9 @@ draw.addEventListener('click', () => {
   console.log(playerCards, "main joueur");
   console.log(dealerCards , "main dealer");
 
-  const data = [];
-  const dataDealer = [];
+  
 
-  for (let x = 3; x <= 21; x += 1) {
-    const valeur = loiNormal(x,resultData);
-    const valeurDealer = loiNormal(x,resultDataDealer);
-    data.push({x : x, y: valeur});
-    dataDealer.push({x : x, y: valeur});
-    console.log("La Loi normal "+ valeur);
-    barChart.data.datasets[0].data[x-3] = valeur;
-    barChart.data.datasets[1].data[x-3] = valeurDealer;
-
-  }
-
-
-  barChart.update();
+  
 
   // Update the HTML to display the cards
   dealerCardsElement.innerHTML = 'Cartes du croupier : ' + dealerCards[0].name + ' ' + '?';
@@ -156,8 +150,53 @@ draw.addEventListener('click', () => {
   console.log("score croupier : ", parseInt(dealerCards[0].value));
   console.log("score joueur : ",parseInt(playerCards[0].value) + parseInt(playerCards[1].value));
   playerScore = getHandValue(playerCards);
+  var Normal = loiNormale();
+  console.log(Normal, " loi normal");
+  setTimeout(timeOut,Normal);
   updateScores();
 });
+
+function changeopacity(){
+  var Opacity = loiBeta(0.5,0.5)/100;
+  var PlayerCard = document.getElementById("player-cards-images");
+  PlayerCard.style.opacity = Opacity;
+  console.log(Opacity);
+}
+function changesize(){
+  var Size = loiLogistique(50,25)*10;
+  var SizeCard = document.getElementById("player-cards-images");
+  var Image = SizeCard.getElementsByTagName("img")[1];
+  console.log(Image, "image");
+  console.log(SizeCard);
+  Image.style.height = Size + "px";
+  Image.style.width = Size + "px";
+}
+
+function changeBackgroundColor(){
+  var Color1 = loiLogistique(127.5,25);
+  var Color2 = loiBeta(0.5,0.5);
+  var Color3 = loiExponentielle(0.011);
+  console.log("color1",Color1);
+  console.log("color2",Color2);
+  console.log("color3",Color3);
+  var Colorbackground = document.getElementById("game-color");
+  Colorbackground.style.background = "linear-gradient(to right, rgb(" + Color1 + ", " + Color2 + ", " + Color3 + "), rgb(" + Color3 + ", " + Color1 + ", " + Color2 + "))";
+
+}
+
+function timeOut(){
+  var imgHidden = document.createElement("img");
+  var imgHidden2 = document.createElement("img");
+  imgHidden.src = "images/cards/fronts/red.svg";
+  imgHidden2.src = "images/cards/fronts/red.svg";
+  while (playerCardsImages.firstChild) {
+    playerCardsImages.removeChild(playerCardsImages.firstChild);
+  }
+  playerCardsImages.appendChild(imgHidden);
+  playerCardsImages.appendChild(imgHidden2);
+}
+
+
 
 function getHandValue(cards) {
   let sum = 0;
@@ -438,18 +477,18 @@ function croupierBlackJack(){
     if( dealerCards[0].value === 11){
       if(playerCards[1].value === 10){
         
-        blackJackElement.innerHTML =  bernouilli(15/49,1) + '%';
+        blackJackElement.innerHTML =  loiBernouilli(15/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML =  bernouilli(16/49,1) + '%';
+        blackJackElement.innerHTML =  loiBernouilli(16/49,1) + '%';
       }
     }
     else if (dealerCards[0].value === 10){
       if(playerCards[1].value === 11){
-        blackJackElement.innerHTML = bernouilli(2/49,1)+ '%';
+        blackJackElement.innerHTML = loiBernouilli(2/49,1)+ '%';
       }
       else{
-        blackJackElement.innerHTML =  bernouilli(3/49,1)+ '%';
+        blackJackElement.innerHTML =  loiBernouilli(3/49,1)+ '%';
       }
     }
     else {
@@ -461,18 +500,18 @@ function croupierBlackJack(){
     if(dealerCards[0].value === 11){
       if(playerCards[1].value === 10){
         
-        blackJackElement.innerHTML =  bernouilli(14/49,1) + '%';
+        blackJackElement.innerHTML =  loiBernouilli(14/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML =  bernouilli(15/49,1) + '%';
+        blackJackElement.innerHTML =  loiBernouilli(15/49,1) + '%';
       }
     }
     else if (dealerCards[0].value === 10){
       if(playerCards[1].value === 11){
-        blackJackElement.innerHTML =  bernouilli(3/49,1) + '%';
+        blackJackElement.innerHTML =  loiBernouilli(3/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML =  bernouilli(4/49,1) + '%';
+        blackJackElement.innerHTML =  loiBernouilli(4/49,1) + '%';
       }
     }
     else {
@@ -483,18 +522,18 @@ function croupierBlackJack(){
     if(dealerCards[0].value === 11){
       if(playerCards[1].value === 10){
         
-        blackJackElement.innerHTML =  bernouilli(15/49,1) + '%';
+        blackJackElement.innerHTML =  loiBernouilli(15/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML =  bernouilli(16/49,1) + '%';
+        blackJackElement.innerHTML =  loiBernouilli(16/49,1) + '%';
       }
     }
     else if (dealerCards[0].value === 10){
       if(playerCards[1].value === 11){
-        blackJackElement.innerHTML =  bernouilli(3/49,1) + '%';
+        blackJackElement.innerHTML =  loiBernouilli(3/49,1) + '%';
       }
       else{
-        blackJackElement.innerHTML = bernouilli(4/49,1) + '%';
+        blackJackElement.innerHTML = loiBernouilli(4/49,1) + '%';
       }
     }
     else {
@@ -522,60 +561,7 @@ function CroupierPair(){
 // loi bernouilli pour savoir blackjack croupier
 // loi hypergeo pour pair croupier
 
-const data = [];
-// const label 
 
-// // Calculer la densité de probabilité pour chaque point
-
-// const canvas = document.createElement('canvas');
-// document.body.appendChild(canvas);
-const barCanvas = document.getElementById("barCanvas")
-const labels = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
-const dataChart = {
-  labels: labels,
-  datasets: [
-  {
-    label: 'Densité de probabilité joueur',
-    data: [],
-    backgroundColor: [
-      'crimson'
-    ],
-  },
-  {
-    label: 'Densité de probabilité dealer',
-    data: [],
-    backgroundColor: [
-      'blue'
-    ],
-  }
-]
-};
-const barChart = new Chart(barCanvas, {
-  type: 'bar',
-  data: dataChart,
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  },
-});
-
-//[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
-
-// new Chart(canvas.getContext('2d'), {
-//   type: 'line',
-//   data: {
-//     labels: labels,
-//     datasets: [
-//       {
-//         label: 'Densité de probabilité',
-//         data: data,
-//       },
-//     ],
-//   },
-// }); 
 
 
 
