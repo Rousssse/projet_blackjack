@@ -106,13 +106,13 @@ function loiNormal(x,resultData){
 
 }
 export function loiNormale(){
-	const mean = 20;
+	const mean = 13;
 	const ecart = 5;
 	const U = Math.random();
   var  normal = mean + ecart * Math.sqrt(-2 * Math.log(U)) * Math.cos(2 * Math.PI * U);
   
   // Limiter la valeur dans l'intervalle [10, 30]
-  normal = Math.max(10, Math.min(30, normal));
+  normal = Math.max(6, Math.min(20, normal));
   
   return Math.floor(normal*1000);
 

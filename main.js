@@ -20,12 +20,14 @@ const secondCardsElement = document.querySelector('#second-cards');
 const secondScoreElement = document.querySelector('#second-score');
 const blackJackElement = document.querySelector('#blackjack');
 const pairElement = document.querySelector('#paires');
-let dealerScore = 0;
+let dealerScore;
 let playerScore = 0;
 let secondScore = 0;
 let handCount = 0;
 let dealerTurn = false;
 let gameOver = false;
+var DealerScore = document.getElementById("dealer-score");
+var SecondScore = document.getElementById("second-score");
 const dealerCards = [];
 const playerCards = [];
 const playerHands = [];
@@ -70,8 +72,10 @@ function drawCard() {
 draw.addEventListener('click', () => {
 
   dealerScore = 0;
+  DealerScore.style.opacity = 0;
   playerScore = 0;
   secondScore = 0;
+  SecondScore.style.opacity = 0;
   dealerTurn = false;
   gameOver = false;
   dealerCards.length = 0;
@@ -87,7 +91,6 @@ draw.addEventListener('click', () => {
     }
   }
   console.log('Nouvelle partie commencée.');
-  console.log(deck);
   shuffleDeck(deck);
    
   dealerCardsElement.innerHTML = '';
@@ -102,13 +105,8 @@ draw.addEventListener('click', () => {
   playerCards.push(drawCard());
   
   resultData[parseInt(playerCards[0].value) + parseInt(playerCards[1].value)-3] +=1;
-  // loiPoisson(3);
-  console.log("poisson", loiPoisson(3));
-  console.log("beta", loiBeta(0.5,0.5));
-  console.log("logistique", loiLogistique(50,25));
   changeopacity();
   changeBackgroundColor();
-  // changesize();
 
   playerCardsImagesHand2.innerHTML = '';
   
@@ -140,14 +138,7 @@ draw.addEventListener('click', () => {
   console.log(playerCards, "main joueur");
   console.log(dealerCards , "main dealer");
 
-  
-
-  
-
   // Update the HTML to display the cards
-  dealerCardsElement.innerHTML = 'Cartes du croupier : ' + dealerCards[0].name + ' ' + '?';
-  playerCardsElement.innerHTML = 'Vos cartes : ' + playerCards[0].name + ' ' + playerCards[1].name;
-  console.log("score croupier : ", parseInt(dealerCards[0].value));
   console.log("score joueur : ",parseInt(playerCards[0].value) + parseInt(playerCards[1].value));
   playerScore = getHandValue(playerCards);
   var Normal = loiNormale();
@@ -157,19 +148,12 @@ draw.addEventListener('click', () => {
 });
 
 function changeopacity(){
-  var Opacity = loiBeta(0.5,0.5)/100;
+  var Opacity = loiPoisson(5)/10;
   var PlayerCard = document.getElementById("player-cards-images");
+  var PlayerScore = document.getElementById("player-score");
   PlayerCard.style.opacity = Opacity;
-  console.log(Opacity);
-}
-function changesize(){
-  var Size = loiLogistique(50,25)*10;
-  var SizeCard = document.getElementById("player-cards-images");
-  var Image = SizeCard.getElementsByTagName("img")[1];
-  console.log(Image, "image");
-  console.log(SizeCard);
-  Image.style.height = Size + "px";
-  Image.style.width = Size + "px";
+  PlayerScore.style.opacity = Opacity;
+  console.log(Opacity, "opacity");
 }
 
 function changeBackgroundColor(){
@@ -250,7 +234,6 @@ Pull.addEventListener('click', () => {
     playerScore = getHandValue(playerCards);
     console.log(playerScore , "gethandvalueplayercards");
     console.log(playerCardsElement);
-    playerCardsElement.innerHTML += ' ' + card.name;
     
     var img1 = document.createElement("img");
     img1.src = "images/cards/fronts/"+playerCards[playerCards.length-1].suit+"_"+playerCards[playerCards.length-1].name+".svg";
@@ -265,7 +248,6 @@ Pull.addEventListener('click', () => {
     secondScore = getHandValue(playerHands);
     console.log(secondScore, "gethandvalueplayerhands");
     console.log(secondCardsElement);
-    secondCardsElement.innerHTML += ' ' + secondcard.name;
 
     var imgHand = document.createElement("img");
     imgHand.src = "images/cards/fronts/"+secondcard.suit+"_"+secondcard.name+".svg";
@@ -279,11 +261,17 @@ Pull.addEventListener('click', () => {
 
     // Check if the player busts
     if (playerScore > 21) {
-      playerScoreElement.innerHTML = 'Vous avez perdu ' + playerScore;
+      playerScoreElement.innerHTML = playerScore;
+      setTimeout(function() {
+        alert("You Lose / Busted !");
+      }, 100);
       handCount = 1;
     }
     if (secondScore > 21) {
-      secondScoreElement.innerHTML = 'Vous avez perdu ' + secondScore;
+      secondScoreElement.innerHTML = secondScore;
+      setTimeout(function() {
+        alert("You Lose / Busted on Second Hand !");
+      }, 100);
       handCount = 2;
     }
     if(playerScore > 21 & secondScore > 21 || playerScore > 21 & secondScore === 0){
@@ -298,12 +286,9 @@ Keep.addEventListener('click', () => {
   if (!gameOver && !dealerTurn) {
     if(secondScore === 0 || secondScore > 21){
       dealerTurn = true;
+      DealerScore.style.opacity = 1;
       updateScores();
   
-      // Reveal the dealer's facedown card
-      dealerCardsElement.innerHTML = "Score Croupier 1 :";
-      dealerCardsElement.innerHTML += ' ' + dealerCards[0].name;
-      dealerCardsElement.innerHTML += ' ' + dealerCards[1].name;
       dealerScore = getHandValue(dealerCards);
   
       croupierCardsImages.innerHTML = '';
@@ -319,7 +304,7 @@ Keep.addEventListener('click', () => {
       while (dealerScore < 17) {
         const card = drawCard();
         dealerCards.push(card);
-        dealerCardsElement.innerHTML += ' ' + card.name;
+        // dealerCardsElement.innerHTML += ' ' + card.name;
         dealerScore = getHandValue(dealerCards);
   
         var newImgDealer = document.createElement("img");
@@ -329,30 +314,43 @@ Keep.addEventListener('click', () => {
   
       // Determine the winner
       if (dealerScore > 21 || playerScore > dealerScore) {
-        playerScoreElement.textContent = 'Vous avez gagné ' + playerScore;
+        playerScoreElement.textContent = playerScore;
+        dealerScoreElement.textContent = dealerScore; 
+        setTimeout(function() {
+          alert("You Win !");
+        }, 100);
       } 
       else if (dealerScore === playerScore ){
-        playerScoreElement.textContent = 'match nul ! ' + playerScore;
+        playerScoreElement.textContent =  playerScore;
+        dealerScoreElement.textContent = dealerScore; 
+        setTimeout(function() {
+          alert(" Draw !");
+        }, 100);
       }
-        else if(dealerScore ===21){
-          playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
-          dealerScoreElement.textContent = "BLACKJACK "  + dealerScore;
+        else if(dealerScore === 21){
+          playerScoreElement.textContent = playerScore;
+          dealerScoreElement.textContent = dealerScore; 
+          setTimeout(function() {
+            alert(" You Lose !");
+          }, 100);
         }
         else if (dealerScore > playerScore) {
-          playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
+          playerScoreElement.textContent =  playerScore;
+          dealerScoreElement.textContent = dealerScore; 
+          setTimeout(function() {
+            alert(" You Lose !");
+          }, 100);
         }
       
-      dealerScoreElement.textContent = dealerScore; 
+      // dealerScoreElement.textContent = dealerScore; 
       gameOver = true;
     }
     if(handCount === 1 & secondScore != 0){
     dealerTurn = true;
+    DealerScore.style.opacity = 1;
     updateScores();
 
     // Reveal the dealer's facedown card
-    dealerCardsElement.innerHTML = "Score Croupier 1 :";
-    dealerCardsElement.innerHTML += ' ' + dealerCards[0].name;
-    dealerCardsElement.innerHTML += ' ' + dealerCards[1].name;
     dealerScore = getHandValue(dealerCards);
 
     croupierCardsImages.innerHTML = '';
@@ -367,7 +365,6 @@ Keep.addEventListener('click', () => {
     while (dealerScore < 17) {
       const card = drawCard();
       dealerCards.push(card);
-      dealerCardsElement.innerHTML += ' ' + card.name;
       dealerScore = getHandValue(dealerCards);
 
       var newImgDealer = document.createElement("img");
@@ -376,37 +373,67 @@ Keep.addEventListener('click', () => {
     }
     if(playerScore < 21){
     if (dealerScore > 21 || playerScore > dealerScore) {
-      playerScoreElement.textContent = 'Vous avez gagné ' + playerScore;
+      playerScoreElement.textContent = playerScore;
+      dealerScoreElement.textContent = dealerScore; 
+      setTimeout(function() {
+        alert(" You Win ! Hand 1");
+      }, 100);
     } 
     else if (dealerScore === playerScore ){
-      playerScoreElement.textContent = 'match nul ! ' + playerScore;
+      playerScoreElement.textContent = playerScore;
+      dealerScoreElement.textContent = dealerScore; 
+      setTimeout(function() {
+        alert(" Draw ! Hand 1");
+      }, 100);
     }
     else if(dealerScore ===21){
-        playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
-        dealerScoreElement.textContent = "BLACKJACK"  + dealerScore;
+        playerScoreElement.textContent = playerScore;
+        dealerScoreElement.textContent = dealerScore;
+        setTimeout(function() {
+          alert(" You Lose ! Hand 1");
+        }, 100);
       }
     else if (dealerScore > playerScore) {
-        playerScoreElement.textContent = 'Vous avez perdu ' + playerScore;
+        playerScoreElement.textContent = playerScore;
+        dealerScoreElement.textContent = dealerScore; 
+        setTimeout(function() {
+          alert(" You Lose ! Hand 1");
+        }, 100);
     }
 
   }
   if(secondScore < 21){
     if (dealerScore > 21 || secondScore > dealerScore) {
-      secondScoreElement.textContent = 'Vous avez gagné ' + secondScore;
+      secondScoreElement.textContent = secondScore;
+      dealerScoreElement.textContent = dealerScore; 
+      setTimeout(function() {
+        alert(" You Win ! Hand 2");
+      }, 100);
     } 
     else if (dealerScore === secondScore ){
-      secondScoreElement.textContent = 'match nul !' + secondScore;
+      secondScoreElement.textContent = secondScore;
+      dealerScoreElement.textContent = dealerScore; 
+      setTimeout(function() {
+        alert(" Draw ! Hand 2");
+      }, 100);
     }
     else if(dealerScore === 21){
-        secondScoreElement.textContent = 'Vous avez perdu '+ secondScore;
-        dealerScoreElement.textContent = "BLACKJACK" + dealerScore;
+        secondScoreElement.textContent = secondScore;
+        dealerScoreElement.textContent = dealerScore;
+        setTimeout(function() {
+          alert(" You Lose ! Hand 2");
+        }, 100);
       }
     else if (dealerScore > secondScore) {
-        secondScoreElement.textContent = 'Vous avez perdu ' + secondScore;
+        secondScoreElement.textContent = secondScore;
+        dealerScoreElement.textContent = dealerScore; 
+        setTimeout(function() {
+          alert(" You Lose ! Hand 2");
+        }, 100);
       }
   }
 
-    dealerScoreElement.textContent = dealerScore; 
+    // dealerScoreElement.textContent = dealerScore; 
     gameOver = true;
   }
 }
@@ -435,6 +462,7 @@ Split.addEventListener('click', () => {
    playerHands.push(hand2card2);
    console.log(playerHands);
    secondScore = getHandValue(playerHands);
+   SecondScore.style.opacity = 1;
    console.log(secondScore);
    
    playerCardsImages.innerHTML = '';
@@ -444,21 +472,19 @@ Split.addEventListener('click', () => {
    img1Hand1.src = "images/cards/fronts/"+playerCards[0].suit+"_"+playerCards[0].name+".svg";
    var img2Hand1 = document.createElement("img");
    img2Hand1.src = "images/cards/fronts/"+playerCards[1].suit+"_"+playerCards[1].name+".svg";
-
-   playerCardsImages.appendChild(img1Hand1);
-   playerCardsImages.appendChild(img2Hand1);
-
    var img1Hand2 = document.createElement("img");
    img1Hand2.src = "images/cards/fronts/"+playerHands[0].suit+"_"+playerHands[0].name+".svg";
    var img2Hand2 = document.createElement("img");
    img2Hand2.src = "images/cards/fronts/"+playerHands[1].suit+"_"+playerHands[1].name+".svg";
-   
+
+   playerCardsImages.appendChild(img1Hand1);
+   playerCardsImages.appendChild(img2Hand1);
    playerCardsImagesHand2.appendChild(img1Hand2);
    playerCardsImagesHand2.appendChild(img2Hand2);
 
    // Update the HTML to display the new hands
-   playerCardsElement.innerHTML = 'Vos cartes : ' + playerCards[0].name + ' ' + playerCards[1].name;
-   secondCardsElement.innerHTML = 'Vos cartes : ' + playerHands[0].name + ' ' + playerHands[1].name;
+  //  playerCardsElement.innerHTML = 'Vos cartes : ' + playerCards[0].name + ' ' + playerCards[1].name;
+  //  secondCardsElement.innerHTML = 'Vos cartes : ' + playerHands[0].name + ' ' + playerHands[1].name;
 
     updateScores();
 

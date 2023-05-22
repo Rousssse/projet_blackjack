@@ -6,13 +6,6 @@ body {
   display: flex;
 }
 
-body{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  height:100vh;
-}
-
 button {
   background-color: #4caf50; /* Couleur de fond */
   color: white; /* Couleur du texte */
@@ -67,6 +60,12 @@ p {
 }
 #draw {
   font-size: 1.5rem;
+  background-color: #2d2f30;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  padding: 10px;
+  font-size: 1.5rem;
 }
 
 .stats-section {
@@ -81,7 +80,7 @@ p {
   border-radius: 20px;
   background: #e0e0e0;
   padding: 1rem;
-  margin-left: 120px;
+  margin-left: 100px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
@@ -96,6 +95,51 @@ p {
   justify-content: center;
   align-items: center;
 }
+#player-score {
+  border-radius: 20px;
+  padding: 2px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  background-color: #2d2f30;
+  width: 30px;
+  text-align: center;
+  float: right;
+}
+#dealer-score {
+  opacity: 1;
+  border-radius: 20px;
+  padding: 2px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  background-color: #2d2f30;
+  width: 30px;
+  text-align: center;
+  float: right;
+  margin-left: 300px;
+
+}
+#second-score {
+  opacity: 1;
+  border-radius: 20px;
+  padding: 2px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  background-color: #2d2f30;
+  width: 30px;
+  text-align: center;
+  float: right;
+  margin-left: 300px;
+
+}
+.players-cards-section-image{
+  display: flex;
+}
 
 #player-cards-images img, #croupier-cards-images img, #player-cards-images-hand2 img{
   width:100px;
@@ -103,6 +147,7 @@ p {
   transition:0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
   margin:5px;
   opacity: 1;
+  flex-direction: row;
 }
 #player-cards-images img:hover, #croupier-cards-images img:hover, #player-cards-images-hand2 img:hover{
   transform: scale(1.2);
