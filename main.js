@@ -123,6 +123,12 @@ draw.addEventListener('click', () => {
   playerHands.length = 0;
   index = 0;
   handCount = 0;
+
+  document.querySelector('body').classList.remove("start-game-body");
+  document.querySelector('body').classList.add("display-game-body");
+  document.querySelector('.right-div').classList.remove('align-items-center')
+  document.querySelector('.right-div').classList.add('align-items-start')
+
   deck.splice(0,52);
   for (let i = 0; i < suits.length; i++) {
     for (let j = 0; j < values.length; j++) {
