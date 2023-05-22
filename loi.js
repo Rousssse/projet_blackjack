@@ -106,14 +106,14 @@ export function loiExponentielle(taux){
 //------------------------------
 
 //loiNormale
-export function loiNormale(){
-	const mean = 13;
+export function loiNormale(min,max){
+	const mean = (min+max)/2;
 	const ecart = 5;
 	const X = Math.random();
     var normal = mean + ecart * Math.sqrt(-2 * Math.log(X)) * Math.cos(2 * Math.PI * X);
   
-  // Limit the value between [6, 20]
-  normal = Math.max(6, Math.min(20, normal));
+  // Limit the value between [min, max]
+  normal = Math.max(min, Math.min(max, normal));
   
   return Math.floor(normal*1000);
 

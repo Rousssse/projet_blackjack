@@ -51,8 +51,8 @@ function shuffleDeck(deck) {
 }
 
 //use of loiPoisson
-function changeOpacity(){
-  var Opacity = loiPoisson(5)/10;
+function changeOpacity(x){
+  var Opacity = loiPoisson(x)/10;
   var PlayerCard = document.getElementById("player-cards-images");
   var PlayerScore = document.getElementById("player-score");
   PlayerCard.style.opacity = Opacity;
@@ -60,10 +60,10 @@ function changeOpacity(){
   console.log(Opacity, "opacity");
 }
 // use of loiLogistique, loiBeta, loiExponentielle
-function changeBackgroundColor(){
+function changeBackgroundColor(taux){
   var Color1 = loiLogistique(127.5,25);
   var Color2 = loiBeta(0.5,0.5);
-  var Color3 = loiExponentielle(0.011);
+  var Color3 = loiExponentielle(taux);
   console.log("color1",Color1);
   console.log("color2",Color2);
   console.log("color3",Color3);
@@ -75,6 +75,7 @@ function changeBackgroundColor(){
 function timeOut(){
   var imgHidden = document.createElement("img");
   var imgHidden2 = document.createElement("img");
+  var PlayerScore = document.getElementById("player-score");
   imgHidden.src = "images/cards/fronts/red.svg";
   imgHidden2.src = "images/cards/fronts/red.svg";
   while (playerCardsImages.firstChild) {
@@ -82,6 +83,9 @@ function timeOut(){
   }
   playerCardsImages.appendChild(imgHidden);
   playerCardsImages.appendChild(imgHidden2);
+  
+  PlayerScore.style.opacity = 0;
+
 }
 
 
@@ -103,6 +107,7 @@ function drawCard() {
 
 draw.addEventListener('click', () => {
 
+  var selectedDifficulty = document.querySelector('input[name="difficulty"]:checked').value;
   GameContainer.style.display = "";
   StatsContainer.style.display = "";
   ActionContainer.style.display = "";
@@ -135,9 +140,35 @@ draw.addEventListener('click', () => {
   playerCards.push(drawCard());
   dealerCards.push(drawCard());
   playerCards.push(drawCard());
-  
-  changeOpacity();
-  changeBackgroundColor();
+  if(selectedDifficulty ==="easy"){
+    changeBackgroundColor(0.002);
+    changeOpacity(3);
+  }
+  if(selectedDifficulty === "medium"){
+  changeBackgroundColor(0.012);
+  var Normal = loiNormale(5,15);
+    console.log(Normal, " loi normal");
+    setTimeout(timeOut,Normal);
+  }
+  else if(selectedDifficulty === "hard"){
+    changeBackgroundColor(0.12);
+    var Normal = loiNormale(0,3);
+    console.log(Normal, " loi normal");
+    setTimeout(timeOut,Normal);
+  }
+  else if(selectedDifficulty === "perso"){
+    var value1 = document.getElementById("value1").value;
+    var value2 = document.getElementById("value2").value;
+    var value3 = document.getElementById("value3").value;
+    var value4 = document.getElementById("value4").value;
+    changeOpacity(value1);
+    changeBackgroundColor(value4);
+    var Normal = loiNormale(value2,value3);
+    console.log(Normal, " loi normal perso");
+    setTimeout(timeOut,Normal);
+
+   
+  }
 
   playerCardsImagesHand2.innerHTML = '';
   
@@ -168,9 +199,6 @@ draw.addEventListener('click', () => {
 
   console.log("score player : ",parseInt(playerCards[0].value) + parseInt(playerCards[1].value));
   playerScore = getHandValue(playerCards);
-  var Normal = loiNormale();
-  console.log(Normal, " loi normal");
-  setTimeout(timeOut,Normal);
   updateScores();
 
 });
