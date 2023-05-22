@@ -7,18 +7,18 @@ body {
 }
 
 button {
-  background-color: #4caf50; /* Couleur de fond */
-  color: white; /* Couleur du texte */
-  padding: 5px 10px; /* Espacement du texte à l'intérieur */
-  border: none; /* Enlever la bordure */
-  cursor: pointer; /* Ajouter un pointeur de souris au survol */
-  border-radius: 5px; /* Ajouter un bord arrondi */
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer; 
+  border-radius: 5px;
   margin: 10px;
 }
 
-/* Style pour le bouton "SPLIT" */
+
 #split {
-  background-color: #f44336; /* Changer la couleur de fond */
+  background-color: #f44336; 
 }
 h2 {
   margin: 0;
@@ -36,7 +36,7 @@ p {
   color: #e0e0e0;
 }
 
-.joueur,
+.player,
 .croupier {
   padding: 2rem;
   border-radius: 10px;
@@ -55,7 +55,7 @@ p {
 .action {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: end;
   margin-left: 70px;
 }
 #draw {

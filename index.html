@@ -14,7 +14,7 @@
 
 <body id="game-color">
 
-    <div class="game">
+    <div class="game" id="game-container">
         <div class="players">
             <div class="croupier">
                 <h2>Croupier :</h2>
@@ -29,8 +29,8 @@
                 </div>
             </div>
 
-            <div class="joueur">
-                <h2>Joueur : </h2>
+            <div class="player">
+                <h2>Player : </h2>
                 <div class="info">
                     <b><div id="player-cards"></div>
                     <div id="second-cards"></div></b>
@@ -52,24 +52,22 @@
             </div>
         </div>
 
-        <div class="action">
+        <div class="action" id="action-container">
             <button id="split">SPLIT</button>
-            <button id="pull">PULL</button>
-            <button id="keep">KEEP</button>
+            <button id="pull"> HIT </button>
+            <button id="keep"> STAND </button>
         </div>
 
-        <button id="draw">Jouer</button>
+        <button id="draw"> Play </button>
 
     </div>
 
-
-    <!-- <button id="double">DOUBLE</button> -->
-    <div class="stats-section">
+    <div class="stats-section" id="stats-container">
         <div class="stats">
-            <p>Probabilité de blackjack croupier : </p>
+            <p>Dealer blackjack probability  : </p>
             <div id="blackjack"></div>
-            <p>Probabilité de paires du croupier : </p>
-            <div id="paires"></div>
+            <p>Dealer Pair Probability : </p>
+            <div id="pairs"></div>
         </div>
     </div>
 

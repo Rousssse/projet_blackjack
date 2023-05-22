@@ -1,45 +1,47 @@
-import {loiExponentielle, loiNormale, loiUniforme} from './loi.js';
-import { loiBernouilli } from './loi.js';
-import { loiHyperGeometrique } from './loi.js';
-import { loiPoisson} from './loi.js'
-import { loiBeta } from './loi.js';
-import { loiLogistique } from './loi.js';
+import {loiExponentielle, loiNormale, loiUniforme, loiBernouilli, loiHyperGeometrique,loiPoisson,loiBeta,loiLogistique} from './loi.js';
+//Button 
 const Pull = document.querySelector('#pull');
 const Keep = document.querySelector('#keep');
 const Split = document.querySelector('#split');
+//Images
 let playerCardsImages = document.getElementById("player-cards-images");
 let playerCardsImagesHand2 = document.getElementById("player-cards-images-hand2");
-
 let croupierCardsImages = document.getElementById("croupier-cards-images");
-
-const dealerCardsElement = document.querySelector('#dealer-cards');
-const playerCardsElement = document.querySelector('#player-cards');
+// display the score
 const dealerScoreElement = document.querySelector('#dealer-score');
 const playerScoreElement = document.querySelector('#player-score');
-const secondCardsElement = document.querySelector('#second-cards');
 const secondScoreElement = document.querySelector('#second-score');
+var DealerScore = document.getElementById("dealer-score");
+var SecondScore = document.getElementById("second-score");
+//set the beginning of the page
+var GameContainer = document.getElementById("game-container");
+GameContainer.style.display = "none";
+var ActionContainer = document.getElementById("action-container");
+ActionContainer.style.display = "none";
+var StatsContainer = document.getElementById("stats-container");
+StatsContainer.style.display = "none";
+// display the % for the dealer to have a blackjack and % for the dealer to have a pair
 const blackJackElement = document.querySelector('#blackjack');
-const pairElement = document.querySelector('#paires');
+const pairElement = document.querySelector('#pairs');
+//data
 let dealerScore;
 let playerScore = 0;
 let secondScore = 0;
 let handCount = 0;
 let dealerTurn = false;
 let gameOver = false;
-var DealerScore = document.getElementById("dealer-score");
-var SecondScore = document.getElementById("second-score");
+//tab with cards
 const dealerCards = [];
 const playerCards = [];
 const playerHands = [];
 const drawnCards = [];
-const resultData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-const resultDataDealer = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-
+// deck of cards
 let deck = [];
 let index = 0;
 const suits = ['spades', 'hearts', 'diamonds', 'clubs'];
 const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11];
 const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
+
 function shuffleDeck(deck) {
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor((loiUniforme(100)/100) * (i + 1));
@@ -48,15 +50,45 @@ function shuffleDeck(deck) {
   return deck;
 }
 
+//use of loiPoisson
+function changeOpacity(){
+  var Opacity = loiPoisson(5)/10;
+  var PlayerCard = document.getElementById("player-cards-images");
+  var PlayerScore = document.getElementById("player-score");
+  PlayerCard.style.opacity = Opacity;
+  PlayerScore.style.opacity = Opacity;
+  console.log(Opacity, "opacity");
+}
+// use of loiLogistique, loiBeta, loiExponentielle
+function changeBackgroundColor(){
+  var Color1 = loiLogistique(127.5,25);
+  var Color2 = loiBeta(0.5,0.5);
+  var Color3 = loiExponentielle(0.011);
+  console.log("color1",Color1);
+  console.log("color2",Color2);
+  console.log("color3",Color3);
+  var backgroundColor = document.getElementById("game-color");
+  backgroundColor.style.background = "linear-gradient(to right, rgb(" + Color1 + ", " + Color2 + ", " + Color3 + "), rgb(" + Color3 + ", " + Color1 + ", " + Color2 + "))";
+
+}
+//use of loiNormal
+function timeOut(){
+  var imgHidden = document.createElement("img");
+  var imgHidden2 = document.createElement("img");
+  imgHidden.src = "images/cards/fronts/red.svg";
+  imgHidden2.src = "images/cards/fronts/red.svg";
+  while (playerCardsImages.firstChild) {
+    playerCardsImages.removeChild(playerCardsImages.firstChild);
+  }
+  playerCardsImages.appendChild(imgHidden);
+  playerCardsImages.appendChild(imgHidden2);
+}
+
 
 function drawCard() {
-    if (deck.length === 0) {
-      console.log("Le paquet est vide!");
-      return;
-    }
     let newDeck = [];
     const nbr = loiUniforme(52-index) - 1;
-    console.log ("nombre " ,nbr )
+    console.log ("number " ,nbr )
     const card = deck[nbr];
     drawnCards.push(card);
     console.log( "carte tire" , card);
@@ -71,6 +103,9 @@ function drawCard() {
 
 draw.addEventListener('click', () => {
 
+  GameContainer.style.display = "";
+  StatsContainer.style.display = "";
+  ActionContainer.style.display = "";
   dealerScore = 0;
   DealerScore.style.opacity = 0;
   playerScore = 0;
@@ -90,12 +125,9 @@ draw.addEventListener('click', () => {
       deck.push(card);
     }
   }
-  console.log('Nouvelle partie commencée.');
+  console.log('new party');
   shuffleDeck(deck);
    
-  dealerCardsElement.innerHTML = '';
-  playerCardsElement.innerHTML = '';
-  secondCardsElement.innerHTML = '';
   dealerScoreElement.textContent = dealerScore;
   playerScoreElement.textContent = playerScore;
   secondScoreElement.textContent = secondScore;
@@ -104,8 +136,7 @@ draw.addEventListener('click', () => {
   dealerCards.push(drawCard());
   playerCards.push(drawCard());
   
-  resultData[parseInt(playerCards[0].value) + parseInt(playerCards[1].value)-3] +=1;
-  changeopacity();
+  changeOpacity();
   changeBackgroundColor();
 
   playerCardsImagesHand2.innerHTML = '';
@@ -128,65 +159,27 @@ draw.addEventListener('click', () => {
 
   croupierCardsImages.appendChild(imgHidden);
 
-  console.log("resultData" , resultData);
   croupierBlackJack();
   CroupierPair();
   dealerCards.push(drawCard());
 
-  resultDataDealer[parseInt(dealerCards[0].value) + parseInt(dealerCards[1].value)-3] +=1;
+  console.log(playerCards, "hand player");
+  console.log(dealerCards , "hand player");
 
-  console.log(playerCards, "main joueur");
-  console.log(dealerCards , "main dealer");
-
-  // Update the HTML to display the cards
-  console.log("score joueur : ",parseInt(playerCards[0].value) + parseInt(playerCards[1].value));
+  console.log("score player : ",parseInt(playerCards[0].value) + parseInt(playerCards[1].value));
   playerScore = getHandValue(playerCards);
   var Normal = loiNormale();
   console.log(Normal, " loi normal");
   setTimeout(timeOut,Normal);
   updateScores();
+
 });
-
-function changeopacity(){
-  var Opacity = loiPoisson(5)/10;
-  var PlayerCard = document.getElementById("player-cards-images");
-  var PlayerScore = document.getElementById("player-score");
-  PlayerCard.style.opacity = Opacity;
-  PlayerScore.style.opacity = Opacity;
-  console.log(Opacity, "opacity");
-}
-
-function changeBackgroundColor(){
-  var Color1 = loiLogistique(127.5,25);
-  var Color2 = loiBeta(0.5,0.5);
-  var Color3 = loiExponentielle(0.011);
-  console.log("color1",Color1);
-  console.log("color2",Color2);
-  console.log("color3",Color3);
-  var Colorbackground = document.getElementById("game-color");
-  Colorbackground.style.background = "linear-gradient(to right, rgb(" + Color1 + ", " + Color2 + ", " + Color3 + "), rgb(" + Color3 + ", " + Color1 + ", " + Color2 + "))";
-
-}
-
-function timeOut(){
-  var imgHidden = document.createElement("img");
-  var imgHidden2 = document.createElement("img");
-  imgHidden.src = "images/cards/fronts/red.svg";
-  imgHidden2.src = "images/cards/fronts/red.svg";
-  while (playerCardsImages.firstChild) {
-    playerCardsImages.removeChild(playerCardsImages.firstChild);
-  }
-  playerCardsImages.appendChild(imgHidden);
-  playerCardsImages.appendChild(imgHidden2);
-}
-
-
 
 function getHandValue(cards) {
   let sum = 0;
   let numAces = 0;
 
-  // Calcule la valeur de la main en ajoutant la valeur de chaque carte
+  // Calculate the value of the hand by adding the value of each card
   for (let card of cards) {
     if (card.value === 1 || card.value === 11) {
       numAces++;
@@ -198,7 +191,7 @@ function getHandValue(cards) {
     }
   }
 
-  // Ajuste la valeur des As si nécessaire
+  // Change the value of Aces if needed 
   while (sum > 21 && numAces > 0) {
     sum -= 10;
     numAces--;
@@ -232,25 +225,22 @@ Pull.addEventListener('click', () => {
     console.log(playerScore);
     playerCards.push(card);
     playerScore = getHandValue(playerCards);
-    console.log(playerScore , "gethandvalueplayercards");
-    console.log(playerCardsElement);
     
     var img1 = document.createElement("img");
     img1.src = "images/cards/fronts/"+playerCards[playerCards.length-1].suit+"_"+playerCards[playerCards.length-1].name+".svg";
     playerCardsImages.appendChild(img1);
   }
   else if( secondScore !=0 && handCount === 1){
-    const secondcard = drawCard();
-    console.log(secondcard);
+    const secondCard = drawCard();
+    console.log(secondCard);
     console.log(secondScore);
-    playerHands.push(secondcard);
+    playerHands.push(secondCard);
     console.log(playerHands)
     secondScore = getHandValue(playerHands);
-    console.log(secondScore, "gethandvalueplayerhands");
-    console.log(secondCardsElement);
+    console.log(secondScore, "secondScore");
 
     var imgHand = document.createElement("img");
-    imgHand.src = "images/cards/fronts/"+secondcard.suit+"_"+secondcard.name+".svg";
+    imgHand.src = "images/cards/fronts/"+secondCard.suit+"_"+secondCard.name+".svg";
     playerCardsImagesHand2.appendChild(imgHand);
 
     }
@@ -275,7 +265,6 @@ Pull.addEventListener('click', () => {
       handCount = 2;
     }
     if(playerScore > 21 & secondScore > 21 || playerScore > 21 & secondScore === 0){
-      console.log("je suis passé par ici ");
       gameOver = true;
     }
   }
@@ -482,17 +471,13 @@ Split.addEventListener('click', () => {
    playerCardsImagesHand2.appendChild(img1Hand2);
    playerCardsImagesHand2.appendChild(img2Hand2);
 
-   // Update the HTML to display the new hands
-  //  playerCardsElement.innerHTML = 'Vos cartes : ' + playerCards[0].name + ' ' + playerCards[1].name;
-  //  secondCardsElement.innerHTML = 'Vos cartes : ' + playerHands[0].name + ' ' + playerHands[1].name;
-
     updateScores();
 
  }
  
 }
 else{
-  console.log("non non non interdit !");
+  console.log("Impossible not the same value !");
 }
   
 });
@@ -571,21 +556,14 @@ function croupierBlackJack(){
 function CroupierPair(){
   if(playerCards[0].name === dealerCards[0].name & playerCards[1].name === dealerCards[0].name ){
     pairElement.innerHTML =  loiHyperGeometrique(1)*100+ '%';
-    console.log( "jsuis la 1 " );
   }
   else if(playerCards[0].name === dealerCards[0].name || playerCards[1].name === dealerCards[0].name ){
     pairElement.innerHTML = loiHyperGeometrique(2)*100 + '%';
-    console.log( "jsuis la 2 " );
   }
   else {
     pairElement.innerHTML = loiHyperGeometrique(3)*100 + '%';
-    console.log( "jsuis la 3 " );
   }
 }
-
-// loi uniforme pour shuffle le cartes + tirer une carte 
-// loi bernouilli pour savoir blackjack croupier
-// loi hypergeo pour pair croupier
 
 
 
